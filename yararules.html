@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/favicon.ico">
+
+    <title>YARA Rule Counts | Malware Analysis Dashboard</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/jasny-bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/dashboard.css">
+</head>
+
+<body>
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0"><span class="navbar-toggler-icon" id="menu-toggle"></span></a>
+    <!--<a class="navbar-toggler move-left" id="menu-toggle"><span class="navbar-toggler-icon"></span></a>-->
+</nav>
+
+<div class="container-fluid" id="wrapper">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar" id="sidebar-wrapper">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="./">
+                            <span data-feather="home"></span>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="yararules.html">
+                            <span data-feather="bar-chart"></span>
+                            Yara Rules Count <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="signatures.html">
+                            <span data-feather="bar-chart-2"></span>
+                            Signature Count
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="allmalware.html">
+                            <span data-feather="cpu"></span>
+                            All Malware Files
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="flaggedfiles.html">
+                            <span data-feather="alert-triangle"></span>
+                            Flagged Malware Files
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="knownmalware.html">
+                            <span data-feather="check-square"></span>
+                            Known Malware Files
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://10.55.200.130">
+                            <span data-feather="external-link"></span>
+                            Cuckoo Webpage
+                        </a>
+                    </li>
+                </ul>
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    <span>Flagged Files</span>
+                </h6>
+                <ul class="nav flex-column mb-2" id="flaggedfiles">
+                </ul>
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    <span>Known Malware Files</span>
+                </h6>
+                <ul class="nav flex-column mb-2" id="knownfiles">
+                </ul>
+            </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 container">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                <h1 class="h2">Top 25 Yara Rules Matched</h1>
+            </div>
+            <canvas class="my-4" id="myChart" width="900" height="500"></canvas>
+            <h2>Yara Counts</h2>
+            <div class="table-responsive" id="Table"></div>
+        </main>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="/libjs/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/libjs/datatables.min.js"></script>
+<script type="text/javascript" src="/libjs/sitefunctions.js"></script>
+<script type="text/javascript" src="/libjs/yararules.js"></script>
+<script type="text/javascript" src="/libjs/jasny-bootstrap.min.js"></script>
+<script type="text/javascript" src="/libjs/Chart.min.js"></script>
+<script type="text/javascript" src="/libjs/sidebarnotable.js"></script>
+<script type="text/javascript" src="/libjs/percircle.js"></script>
+<script type="text/javascript" src="/libjs/odometer.min.js"></script>
+<script src="/libjs/popper.min.js"></script>
+<script src="/libjs/bootstrap.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        new YaraPage("#Table", "#yaraTable", "myChart");
+    });
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+</script>
+<!-- Icons -->
+<script src="/libjs/feather.min.js"></script>
+<script>
+    feather.replace()
+</script>
+</body>
+</html>

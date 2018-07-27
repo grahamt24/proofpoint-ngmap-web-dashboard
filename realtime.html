@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/favicon.ico">
+
+    <title>Real Time Dashboard | Malware Analysis Dashboard</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/jasny-bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/percircle.css">
+    <link rel="stylesheet" type="text/css" href="/css/odometer-theme-default.css">
+    <link rel="stylesheet" type="text/css" href="/css/dashboard.css">
+
+</head>
+
+<body>
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="./realtime.html">Malware Analysis Dashboard</a>
+    <a href="" class="navbar-toggler move-left" id="menu-toggle"><span class="navbar-toggler-icon"></span></a>
+</nav>
+
+<div class="container-fluid" id="wrapper">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar" id="sidebar-wrapper">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                    <li class="nav-item">
+                        <a class="nav-link" href="./">
+                            <span data-feather="home"></span>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="realtime.html">
+                            <span data-feather="clock"></span>
+                            Real-Time Dashboard <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="yararules.html">
+                            <span data-feather="bar-chart"></span>
+                            Yara Rules Count
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="signatures.html">
+                            <span data-feather="bar-chart-2"></span>
+                            Signature Count
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="allmalware.html">
+                            <span data-feather="cpu"></span>
+                            All Malware Files
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="flaggedfiles.html">
+                            <span data-feather="alert-triangle"></span>
+                            Flagged Malware Files
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="knownmalware.html">
+                            <span data-feather="check-square"></span>
+                            Known Malware Files
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://10.55.200.130">
+                            <span data-feather="external-link"></span>
+                            Cuckoo Webpage
+                        </a>
+                    </li>
+                </ul>
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    <span>Flagged Files</span>
+                </h6>
+                <ul class="nav flex-column mb-2" id="flaggedfiles">
+                </ul>
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    <span>Known Malware Files</span>
+                </h6>
+                <ul class="nav flex-column mb-2" id="knownfiles">
+                </ul>
+            </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 container">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                <h1 class="h2">Dashboard</h1>
+            </div>
+            <div class="card-deck">
+                <div class="card border-success mb-3">
+                    <div class="card-header bg-transparent border-success text-center"><p class="h4">Clusters of Malware</p></div>
+                    <div class="card-body">
+                        <p id="clusternum" class="display-3 text-center">0</p>
+                    </div>
+                </div>
+                <div class="card border-danger mb-3">
+                    <div class="card-header bg-transparent border-danger text-center"><p class="h4">Average Static Analysis Time</p></div>
+                    <div class="card-body text-center"><p id="averagetime" class="card-title display-4 text-center">00:00.000</p></div>
+                </div>
+                <div class="card border-info mb-3">
+                    <div class="card-header bg-transparent border-info text-center"><p class="h5">Total Files Analyzed</p></div>
+                    <div class="card-body">
+                        <h2 id="filecount" class="display-3 text-center">0</h2>
+                    </div>
+                    <div class="card-footer text-right bg-transparent border-info">
+                        <a href="allmalware.html" class="text-dark">View More
+                            <span data-feather="arrow-right-circle"></span></a></div>
+                </div>
+            </div>
+            <div class="card-deck">
+                <div class="card border-primary mb-3">
+                    <div class="card-header bg-transparent border-primary text-center"><p class="h4">Files Undergoing Dynamic Analysis</p></div>
+                    <div class="card-body">
+                        <div id="dynamiccircle" class="center"></div>
+                        <br>
+                        <h5 class="text-center">OR</h5>
+                        <div id="dynamicnum" class="display-3 text-center">0</div>
+                    </div>
+                    <div class="card-footer text-right bg-transparent border-primary">
+                        <a href="http://10.55.200.130/dashboard/" class="text-dark">View More <span data-feather="arrow-right-circle"></span></a></div>
+                </div>
+                <div class="card border-dark mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Top 5 Yara Rules Matched</h5>
+                        <div id="top5yara" class="table-responsive"></div>
+                    </div>
+                    <div class="card-footer text-right bg-transparent border-dark">
+                        <a href="yararules.html" class="text-dark">View More
+                            <span data-feather="arrow-right-circle"></span></a></div>
+                </div>
+                <div class="card border-secondary mb-3">
+                    <div class="card-body">
+                        <div id="flaggedfilecircle"></div>
+                        <h5 class="card-title text-center"><br>of files analyzed do not match a YARA Rule</h5>
+                        <br><br><br><br><br>
+                        <div id="knownfilecircle" ></div>
+                        <h5 class="card-title text-center"><br>of files analyzed match one or more YARA Rule</h5>
+                    </div>
+                    <div class="card-footer text-right bg-transparent border-secondary">
+                        <a href="knownmalware.html" class="text-dark float-left">View More Known Files
+                            <span data-feather="arrow-right-circle"></span></a>
+                        <a href="flaggedfiles.html" class="text-dark">View More Flagged Files
+                            <span data-feather="arrow-right-circle"></span></a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="/libjs/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/libjs/datatables.min.js"></script>
+<script type="text/javascript" src="/libjs/sitefunctions.js"></script>
+<script type="text/javascript" src="/libjs/realtime.js"></script>
+<script type="text/javascript" src="/libjs/jasny-bootstrap.min.js"></script>
+<script type="text/javascript" src="/libjs/Chart.min.js"></script>
+<script type="text/javascript" src="/libjs/sidebarnotable.js"></script>
+<script type="text/javascript" src="/libjs/percircle.js"></script>
+<script type="text/javascript" src="/libjs/odometer.min.js"></script>
+<script src="/libjs/popper.min.js"></script>
+<script src="/libjs/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function(){
+        new RealTime("#Table", "#malwareTable", "myChart");
+    });
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+</script>
+
+<!-- Icons -->
+<script src="/libjs/feather.min.js"></script>
+<script>
+    feather.replace()
+</script>
+</body>
+</html>
